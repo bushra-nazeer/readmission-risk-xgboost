@@ -2,7 +2,6 @@
 
 - **Date:** 2026-06-25
 - **Status:** Approved
-- **Portfolio role:** Data Scientist flagship (repo 1 of 6)
 
 ## 1. Overview
 
@@ -15,7 +14,7 @@ any proprietary employer system.
 
 ## 2. Resume claims this proves
 
-| Claim (across resume variants) | How this repo demonstrates it |
+| Capability | How this repo demonstrates it |
 |---|---|
 | Patient risk prediction (XGBoost + SHAP), ~0.89 AUC | XGBoost/LightGBM models with SHAP; README reports the *real* achieved AUC |
 | Explainability (SHAP, LIME) | SHAP global + local plots; one LIME example |
