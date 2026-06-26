@@ -67,6 +67,10 @@ flowchart LR
 The persisted artifact is a full `Pipeline(preprocessor, model)`, so the exact
 transforms used in training run at serve time, no train/serve skew.
 
+## Demo
+
+An interactive Streamlit app (`streamlit_app.py`) lets you enter a patient and see the risk score with its top SHAP drivers. Run it locally with `streamlit run streamlit_app.py`, or deploy it free on [Streamlit Community Cloud](https://streamlit.io/cloud) by connecting this repo and setting the main file to `streamlit_app.py`.
+
 ## Quickstart
 
 ### Option A, Docker (no local Python needed)
