@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+      target: runtime
+    ports:
+      - "8000:8000"
+    environment:
+      - MLFLOW_TRACKING_URI=file:./mlruns
+
+  # Optional MLflow UI: `docker compose --profile mlflow up mlflow`
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.13.0
+    command: mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri file:/mlruns
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlruns
+    profiles: ["mlflow"]

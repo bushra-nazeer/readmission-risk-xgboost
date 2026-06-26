@@ -1,0 +1,30 @@
+# Data (re-downloadable via `make data`)
+data/raw/
+data/processed/
+
+# MLflow local store
+mlruns/
+mlartifacts/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Environments
+.venv/
+venv/
+.env
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store

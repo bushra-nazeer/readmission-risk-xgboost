@@ -1,0 +1,40 @@
+# Central configuration for the readmission-risk pipeline.
+# Every module reads from here via readmission.config.load_config().
+
+paths:
+  data_raw: data/raw/encounters.parquet
+  data_processed: data/processed/features.parquet
+  model_path: models/model.pkl
+  model_metadata: models/metadata.json
+  reports_dir: reports
+  figures_dir: reports/figures
+
+random_state: 42
+test_size: 0.2
+val_size: 0.1
+
+target:
+  column: readmitted
+  positive_label: "<30"   # readmitted within 30 days == positive class (1)
+
+# Columns dropped before modeling (identifiers + very sparse fields).
+drop_columns:
+  - encounter_id
+  - patient_nbr
+  - weight
+  - payer_code
+  - medical_specialty
+
+# Demographic columns used for fairness slicing.
+sensitive_features:
+  - race
+  - gender
+  - age
+
+optuna:
+  n_trials: 25
+  timeout_seconds: 900
+
+# Operating point: choose threshold meeting this precision floor (fallback 0.5).
+threshold:
+  target_precision: 0.30

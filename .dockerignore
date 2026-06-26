@@ -1,0 +1,13 @@
+.git
+.venv
+venv
+data/raw
+data/processed
+mlruns
+mlartifacts
+notebooks
+.pytest_cache
+.ruff_cache
+__pycache__
+*.egg-info
+.DS_Store
