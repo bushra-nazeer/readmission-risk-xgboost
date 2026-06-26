@@ -13,7 +13,7 @@ from .config import Config, load_config
 
 def _fmt(value) -> str:
     if value is None or (isinstance(value, float) and math.isnan(value)):
-        return "—"
+        return "-"
     if isinstance(value, float):
         return f"{value:.3f}"
     return str(value)
@@ -35,11 +35,11 @@ def render_model_card(
     metadata = metadata or {}
     model_type = metadata.get("model_type", "gradient-boosted trees")
     positive_pct = metrics.get("positive_rate", 0) * 100
-    return f"""# Model Card — 30-Day Hospital Readmission Risk
+    return f"""# Model Card, 30-Day Hospital Readmission Risk
 
 ## Model Details
 - **Type:** {model_type}
-- **Task:** Binary classification — probability of inpatient readmission within 30 days.
+- **Task:** Binary classification, probability of inpatient readmission within 30 days.
 - **Dataset:** {metadata.get("dataset", "UCI Diabetes 130-US Hospitals (1999-2008)")}.
 - **Positive label:** `readmitted == "{cfg.target_positive_label}"`.
 
@@ -65,7 +65,7 @@ A logistic-regression baseline is trained alongside for reference
 {_df_to_md(fairness)}
 
 ## Limitations
-- Trained on 1999–2008 US hospital encounters; not representative of current
+- Trained on 1999-2008 US hospital encounters; not representative of current
   populations or non-US care settings.
 - Class imbalance (~{positive_pct:.0f}% positive) makes PR-AUC and calibration
   more informative than raw accuracy.

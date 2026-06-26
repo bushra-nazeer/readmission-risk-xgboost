@@ -1,7 +1,7 @@
 """Model training with Optuna tuning and MLflow tracking.
 
 Builds a ``Pipeline(preprocessor, classifier)`` so the persisted artifact takes
-an engineered feature frame directly — the exact transforms used at serve time.
+an engineered feature frame directly, the exact transforms used at serve time.
 A logistic-regression baseline is trained for comparison.
 """
 

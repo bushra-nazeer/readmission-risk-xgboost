@@ -32,7 +32,7 @@ flowchart LR
 ## Design notes
 
 - The persisted artifact is a full `Pipeline(preprocessor, classifier)`, so the
-  identical transforms run in training and serving — no train/serve skew.
+  identical transforms run in training and serving, no train/serve skew.
 - `features.py` is intentionally free of I/O and global state so it is trivially
   unit-tested and reused by the API.
 - The split is seeded and stratified; `evaluate.py` and `explain.py` reconstruct

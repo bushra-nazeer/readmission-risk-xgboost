@@ -1,4 +1,4 @@
-# Readmission Risk — XGBoost + Explainability
+# Readmission Risk, XGBoost + Explainability
 
 [![CI](https://github.com/bushra-nazeer/readmission-risk-xgboost/actions/workflows/ci.yml/badge.svg)](https://github.com/bushra-nazeer/readmission-risk-xgboost/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.12-blue)
@@ -7,11 +7,11 @@
 Predicts **30-day hospital readmission risk** from patient-encounter data, with
 the things that matter in a real clinical ML system: **probability calibration,
 SHAP explainability, subgroup fairness analysis, experiment tracking, and a
-deployable scoring API** — all reproducible from public data with one command.
+deployable scoring API**: all reproducible from public data with one command.
 
 > **What this is:** a self-contained reference implementation on the public
 > **UCI Diabetes 130-US Hospitals** dataset (~101K encounters). It demonstrates
-> the full technique end-to-end and reports **real, reproducible metrics** — it
+> the full technique end-to-end and reports **real, reproducible metrics**: it
 > is not a proprietary production system and uses no protected health information.
 
 ## Results (held-out test set)
@@ -19,14 +19,14 @@ deployable scoring API** — all reproducible from public data with one command.
 | Metric | XGBoost | Logistic baseline |
 |---|---|---|
 | **ROC-AUC** | **0.688** | 0.648 |
-| PR-AUC | 0.235 | — |
-| Brier score | 0.206 | — |
-| Precision @ operating threshold | 0.300 | — |
-| Recall @ operating threshold | 0.200 | — |
+| PR-AUC | 0.235 |, |
+| Brier score | 0.206 |, |
+| Precision @ operating threshold | 0.300 |, |
+| Recall @ operating threshold | 0.200 |, |
 
 The positive class (readmitted < 30 days) is only **~11%** of encounters, so
 PR-AUC and calibration are reported alongside ROC-AUC rather than misleading
-accuracy. ROC-AUC ≈ 0.69 is consistent with published results on this dataset —
+accuracy. ROC-AUC ≈ 0.69 is consistent with published results on this dataset -
 an honest, reproducible number. Full per-subgroup breakdown is in the
 [model card](reports/MODEL_CARD.md).
 
@@ -38,14 +38,14 @@ an honest, reproducible number. Full per-subgroup breakdown is in the
 
 ## What it demonstrates
 
-- **Modeling** — XGBoost + LightGBM with an Optuna hyperparameter search,
+- **Modeling**: XGBoost + LightGBM with an Optuna hyperparameter search,
   class-imbalance handling (`scale_pos_weight`), and a logistic-regression baseline.
-- **Evaluation** — ROC-AUC, PR-AUC, Brier score, calibration curve, and an
+- **Evaluation**: ROC-AUC, PR-AUC, Brier score, calibration curve, and an
   operating threshold chosen to meet a precision target.
-- **Explainability** — SHAP global (beeswarm/bar) and local (waterfall) plus a
+- **Explainability**: SHAP global (beeswarm/bar) and local (waterfall) plus a
   LIME example; the same SHAP driver logic powers the API's per-prediction reasons.
-- **Fairness** — sliced AUC / recall / false-positive-rate across race, gender, and age.
-- **MLOps** — MLflow experiment tracking, an auto-generated model card, a typed
+- **Fairness**: sliced AUC / recall / false-positive-rate across race, gender, and age.
+- **MLOps**: MLflow experiment tracking, an auto-generated model card, a typed
   FastAPI scoring service, Docker, and CI (ruff + pytest).
 
 ## Architecture
@@ -65,11 +65,11 @@ flowchart LR
 ```
 
 The persisted artifact is a full `Pipeline(preprocessor, model)`, so the exact
-transforms used in training run at serve time — no train/serve skew.
+transforms used in training run at serve time, no train/serve skew.
 
 ## Quickstart
 
-### Option A — Docker (no local Python needed)
+### Option A, Docker (no local Python needed)
 
 ```bash
 # Build + serve the scoring API (model is baked into the image)
@@ -77,7 +77,7 @@ docker compose up --build api
 # → http://localhost:8000/health   and   POST http://localhost:8000/predict
 ```
 
-### Option B — local with uv
+### Option B, local with uv
 
 ```bash
 make install          # creates a Python 3.12 venv and installs everything
@@ -129,7 +129,7 @@ docs/              architecture diagram and design spec
 ## Notes on responsible use
 
 This model is decision **support**, not a diagnostic device. It is trained on
-1999–2008 US encounters and is not representative of current or non-US
+1999-2008 US encounters and is not representative of current or non-US
 populations. Subgroup performance varies (see the model card) and should be
 monitored before any real deployment.
 

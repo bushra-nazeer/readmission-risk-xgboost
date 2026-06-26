@@ -1,4 +1,4 @@
-# readmission-risk-xgboost — Design Spec
+# readmission-risk-xgboost, Design Spec
 
 - **Date:** 2026-06-25
 - **Status:** Approved
@@ -10,7 +10,7 @@ A production-grade machine-learning repository that predicts **30-day hospital
 readmission risk** from patient encounter data, with full explainability,
 calibration, fairness analysis, experiment tracking, and a deployable scoring
 API. It is a self-contained, reproducible reference implementation built on
-public data — it demonstrates the technique end-to-end; it does not reproduce
+public data, it demonstrates the technique end-to-end; it does not reproduce
 any proprietary employer system.
 
 ## 2. Resume claims this proves
@@ -26,34 +26,34 @@ any proprietary employer system.
 
 ## 3. Dataset
 
-- **UCI Diabetes 130-US Hospitals (1999–2008)**, ~101,766 encounters, 50 features.
+- **UCI Diabetes 130-US Hospitals (1999-2008)**, ~101,766 encounters, 50 features.
 - Fetched reproducibly via the `ucimlrepo` package (`fetch_ucirepo(id=296)`).
-- **Target:** binary — `readmitted == "<30"` (positive, ~11%) vs. everything else.
-- **Known realistic ceiling:** ROC-AUC ≈ 0.68–0.72 for the <30-day target. The
+- **Target:** binary, `readmitted == "<30"` (positive, ~11%) vs. everything else.
+- **Known realistic ceiling:** ROC-AUC ≈ 0.68-0.72 for the <30-day target. The
   README reports the actual run value, not the resume's aspirational number.
 
 ## 4. Functional requirements (pipeline stages)
 
-1. **Data acquisition** — download via `ucimlrepo`, cache to `data/raw/`
+1. **Data acquisition**: download via `ucimlrepo`, cache to `data/raw/`
    (gitignored). Deterministic; re-runnable offline once cached.
-2. **Feature engineering** — map ICD-9 `diag_1/2/3` to clinical categories
+2. **Feature engineering**: map ICD-9 `diag_1/2/3` to clinical categories
    (circulatory, respiratory, diabetes, injury, …); age brackets → ordinals;
    service-utilization aggregates (inpatient/outpatient/emergency); medication
    change/count features; principled handling of `?`/missing (drop
    `weight`, `payer_code` if too sparse; impute/flag the rest).
-3. **Train/validate/test split** — stratified; fixed seed for reproducibility.
-4. **Modeling** — Logistic-Regression baseline → XGBoost (primary) + LightGBM.
+3. **Train/validate/test split**: stratified; fixed seed for reproducibility.
+4. **Modeling**: Logistic-Regression baseline → XGBoost (primary) + LightGBM.
    Imbalance via `scale_pos_weight` + operating-threshold selection (not naive
    oversampling). Optuna hyperparameter search with MLflow logging.
-5. **Evaluation** — ROC-AUC, PR-AUC, Brier score, calibration curve, confusion
+5. **Evaluation**: ROC-AUC, PR-AUC, Brier score, calibration curve, confusion
    matrix at chosen threshold, recall@fixed-precision.
-6. **Explainability** — SHAP global (beeswarm + bar) and local (waterfall for
+6. **Explainability**: SHAP global (beeswarm + bar) and local (waterfall for
    sample patients); one LIME example for contrast.
-7. **Fairness** — sliced metrics (AUC, recall, FPR) by `race`, `gender`, age
+7. **Fairness**: sliced metrics (AUC, recall, FPR) by `race`, `gender`, age
    group; flag disparities.
-8. **Model card** — generate `reports/MODEL_CARD.md` (intended use, data,
+8. **Model card**: generate `reports/MODEL_CARD.md` (intended use, data,
    metrics, limitations, fairness, ethics).
-9. **Serving** — FastAPI service loads the trained artifact; `/predict` returns
+9. **Serving**: FastAPI service loads the trained artifact; `/predict` returns
    risk score + top SHAP contributors; `/health` for liveness.
 
 ## 5. Architecture & modules
@@ -92,7 +92,7 @@ At serve time: request → `schemas.py` validation → `features.py` transform �
   mlflow, fastapi, uvicorn, pydantic, ucimlrepo.
 - **Dev/quality:** ruff (lint+format), pytest, pytest-cov.
 - **Deps & lock:** `pyproject.toml` (+ `uv.lock` or pinned `requirements.txt`).
-- **Workflows:** `Makefile` — `make data | train | evaluate | serve | test`.
+- **Workflows:** `Makefile`, `make data | train | evaluate | serve | test`.
 
 ## 8. Repo structure
 
@@ -116,10 +116,10 @@ readmission-risk-xgboost/
 
 ## 9. Testing strategy
 
-- `test_features.py` — deterministic transforms: known input → expected output,
+- `test_features.py`, deterministic transforms: known input → expected output,
   ICD grouping correctness, no leakage of target into features.
-- `test_data.py` — split is stratified and seed-stable; schema sanity.
-- `test_api.py` — FastAPI `TestClient`: `/health` ok, `/predict` validates input
+- `test_data.py`, split is stratified and seed-stable; schema sanity.
+- `test_api.py`, FastAPI `TestClient`: `/health` ok, `/predict` validates input
   and returns a score in [0,1] + SHAP drivers; bad payload → 422.
 - Coverage reported; CI fails on test failure or lint error.
 
@@ -132,7 +132,7 @@ GitHub Actions (`ci.yml`): set up Python 3.12 → install (uv) → `ruff check` 
 
 - Docker is the source of truth; `make` targets give one-command local runs.
 - **Committed for GitHub presentation:** generated figures, `MODEL_CARD.md`, and
-  a small trained model — so the repo renders richly without anyone running it.
+  a small trained model, so the repo renders richly without anyone running it.
 - **Gitignored:** `data/raw/` (re-downloadable), `mlruns/`, large/derived files.
 - **Account-agnostic:** README/CI badges use a `<your-username>` placeholder.
 - **Deliverable:** git-initialized folder + `readmission-risk-xgboost.zip` ready
@@ -148,9 +148,9 @@ GitHub Actions (`ci.yml`): set up Python 3.12 → install (uv) → `ruff check` 
 ## 13. Out of scope (YAGNI)
 
 - Cloud deployment (covered conceptually; repo 5 owns the MLOps lifecycle).
-- Orchestration/scheduling (Airflow) — that's repo 1's lakehouse / repo 5's job.
-- Deep-learning models — XGBoost/LightGBM are the right tool for this tabular task.
-- Front-end UI — the API + notebook + reports are the interface.
+- Orchestration/scheduling (Airflow), that's repo 1's lakehouse / repo 5's job.
+- Deep-learning models, XGBoost/LightGBM are the right tool for this tabular task.
+- Front-end UI, the API + notebook + reports are the interface.
 
 ## 14. Success criteria
 

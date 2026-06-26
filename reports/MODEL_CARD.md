@@ -1,8 +1,8 @@
-# Model Card — 30-Day Hospital Readmission Risk
+# Model Card, 30-Day Hospital Readmission Risk
 
 ## Model Details
 - **Type:** xgboost
-- **Task:** Binary classification — probability of inpatient readmission within 30 days.
+- **Task:** Binary classification, probability of inpatient readmission within 30 days.
 - **Dataset:** UCI Diabetes 130-US Hospitals (1999-2008), id=296.
 - **Positive label:** `readmitted == "<30"`.
 
@@ -34,7 +34,7 @@ A logistic-regression baseline is trained alongside for reference
 | race | Other | 276 | 20 | 0.690 | 0.150 | 0.035 |
 | gender | Female | 10924 | 1255 | 0.691 | 0.206 | 0.059 |
 | gender | Male | 9430 | 1016 | 0.684 | 0.192 | 0.058 |
-| age | [0-10) | 34 | 0 | — | — | 0.000 |
+| age | [0-10) | 34 | 0 |, |, | 0.000 |
 | age | [10-20) | 130 | 6 | 0.804 | 0.000 | 0.008 |
 | age | [20-30) | 324 | 43 | 0.836 | 0.535 | 0.121 |
 | age | [30-40) | 725 | 78 | 0.708 | 0.282 | 0.083 |
@@ -46,7 +46,7 @@ A logistic-regression baseline is trained alongside for reference
 | age | [90-100) | 576 | 74 | 0.647 | 0.122 | 0.022 |
 
 ## Limitations
-- Trained on 1999–2008 US hospital encounters; not representative of current
+- Trained on 1999-2008 US hospital encounters; not representative of current
   populations or non-US care settings.
 - Class imbalance (~11% positive) makes PR-AUC and calibration
   more informative than raw accuracy.
